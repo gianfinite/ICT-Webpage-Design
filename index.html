@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <!-- font for Pixelify Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+
 <style>
 /* 100a13 = backround color */
      .header {
@@ -150,26 +153,31 @@
     pointer-events: none;       
     }
 
+/* row that holds the two buttons */
+    .btn-row {
+    position: relative;
+    top: 5vw;               /* move the buttons up/down here */
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+}
+
 /* glass morph button */
     .glass-btn {
-    position: relative;
-    top: 5vw;    
-    left: -65%;
-    gap: 4vw;    
-    z-index: 5;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 
-    background: rgba(255, 255, 255, 0.1);   
-    backdrop-filter: blur(10px);            
-    -webkit-backdrop-filter: blur(10px);    
-    border: 1px solid rgba(255, 255, 255, 0.25); 
-    border-radius: 12px;                    
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 79, 216, 0.3); /* Depth + pink glow */
-    
-    
 /* Text and sizing */
     color: white;
     font-family: "Pixelify Sans", monospace;
-    font-size: 1.1vw;
+    font-size: clamp(12px, 1.1vw, 18px);
+    font-weight: 700;
+    letter-spacing: 0.1vw;
     text-transform: uppercase;
     text-decoration: none;
     padding: 0.8vw 1.8vw;
@@ -177,12 +185,12 @@
     transition: all 0.25s ease;
 }
 
-    /* hover effect sa glass button*/
+    /* hover effect sa glass button - pink glow */
     .glass-btn:hover {
-    background: rgba(255, 79, 216, 0.25);   
-    border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 0 18px #ff4fd8;           
-    transform: translateY(-2px);     
+    background: rgba(255, 79, 216, 0.25);
+    border-color: #ff4fd8;
+    box-shadow: 0 0 10px #ff4fd8, 0 0 25px #ff4fd8, 0 0 45px rgba(255, 79, 216, 0.6);
+    transform: translateY(-2px);
 }
 
     html{
@@ -206,8 +214,11 @@
     
     <!-- title and about us parts -->
     <img class="maintitle" src="Title.png">
-     <button class="glass-btn">Go to Calculator</button>
-    <a href="#bd2" class="glass-btn">Meet the group</a>
+
+    <div class="btn-row">
+        <a href="calculator.html" class="glass-btn">Go to Calculator</a>
+        <a href="#bd2" class="glass-btn">Meet the group</a>
+    </div>
     
     <section>
     <img class="aboutustitle" src="about us title.png">
