@@ -4,31 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- fonts: Pixelify Sans (member cards) + Silkscreen (menu and buttons) -->
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 /* 100a13 = backround color */
      .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  box-sizing: border-box;   /* add this line */
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 6%;
-         font-family: Silkscreen, sans-serif;
-}
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      box-sizing: border-box;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
 
     .navbar {
+      font-family: "Silkscreen", sans-serif;
       width: fit-content;
-      margin: 20px auto;
+      margin: 20px 0;
       padding: 12px 24px;
       display: flex;
       align-items: center;
@@ -43,16 +41,10 @@
       color: #fff;
     }
 
-    .navbar ul {
-      display: flex;
-      gap: 20px;
-      text-decoration: none;
-        color: white;
-    }
-
     .navbar a {
+      font-family: "Silkscreen", sans-serif;
       text-decoration: none;
-    color: white;
+      color: white;
     }
 
     .navbar li a:hover {
@@ -79,9 +71,9 @@
     }
 
     .aboutustitle{
-        position: relative;
-        top: 200px;      
-        left: 30%;      
+        position: absolute;
+        top: 36vw;       /* raise or lower this until it sits above the cards */
+        left: 30%;
         width: 40%;
         height: auto;
     }
@@ -118,6 +110,9 @@
     #t3{top: 54.5vw; left: 67%;}
     #t4{top: 77vw; left: 28.5%;}
     #t5{top: 77vw; left: 54.5%;}
+
+/* narrower text box for the bottom two cards so text stays inside the frame */
+    #t4, #t5 { width: 19%; }
 
     @keyframes flicker {
     0%   {opacity: 1;}
@@ -160,11 +155,11 @@
 /* row that holds the two buttons */
     .btn-row {
     position: relative;
-    top: 8vw;
+    top: 8vw;               /* move the buttons up/down here */
     z-index: 5;
     display: flex;
-    justify-content: flex-start;   /* was center */
-    padding-left: 4.5vw;           /* lines up with the left edge of the title */
+    justify-content: flex-start;
+    padding-left: 4.5vw;    /* lines the buttons up with the title */
     gap: 1vw;
 }
 
@@ -180,7 +175,7 @@
 /* Text and sizing */
     color: white;
     font-family: "Silkscreen", sans-serif;
-    font-size: clamp(12px, 1.1vw, 18px);
+    font-size: clamp(11px, 1vw, 16px);
     font-weight: 700;
     letter-spacing: 0.1vw;
     text-transform: uppercase;
@@ -188,7 +183,6 @@
     padding: 0.8vw 1.8vw;
     cursor: pointer;
     transition: all 0.25s ease;
-   
 }
 
     /* hover effect sa glass button - pink glow */
@@ -222,7 +216,7 @@
     <img class="maintitle" src="Title.png">
 
     <div class="btn-row">
-        <a href="calculator.html" class="glass-btn">Go to Calculator</a>
+        <a href="calculator.html" class="glass-btn">Open Calculator</a>
         <a href="#bd2" class="glass-btn">Meet the group</a>
     </div>
     
@@ -259,13 +253,13 @@
     <div class="text" id="t4">
         <h2>Escamilla, <br> Sarah Louisse</h2>
         <h3>Front-End<br>Developer</h3>
-        <p>she contributed to the user interface design and<br>implementation.</p>
+        <p>she contributed to the user interface design and implementation.</p>
     </div>
 
     <div class="text" id="t5">
         <h2>Tubo, <br> Brent Cyrus</h2>
         <h3>Front-End<br>Developer</h3>
-        <p>he contributed to the user<br>interface design and<br>implementation.</p>
+        <p>he contributed to the user interface design and implementation.</p>
     </div>
     </section>
 
