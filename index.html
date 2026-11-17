@@ -3,279 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Group A | Circuit Calculator</title>
 
-    <!-- fonts: Pixelify Sans (member cards) + Silkscreen (menu and buttons) -->
+    <!-- fonts: Silkscreen (menu + buttons) and Pixelify Sans (member cards) -->
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-/* 100a13 = backround color */
-     .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      box-sizing: border-box;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
+/* ---------- basics ---------- */
+    html {
+        background: #0e0b13;            /* same dark color as the video, shows while it loads */
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        color: white;
+    }
+
+    /* images can't be selected or dragged */
+    img {
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-user-drag: none;
+    }
+
+/* ---------- page wrapper + background video ---------- */
+    /* everything except the menu sits inside .page, so the video covers the whole page height */
+    .page {
+        position: relative;
+        isolation: isolate;
+        overflow-x: clip;               /* the frame glow never makes a sideways scrollbar */
+    }
+
+    .bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;              /* fills the page, no stretching */
+        object-position: center top;    /* city + sphere stay at the top */
+        z-index: -1;                    /* behind all the content */
+    }
+
+/* ---------- header menu ---------- */
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: center;        /* keeps the menu centered */
+        padding: 20px 12px 0;
     }
 
     .navbar {
-      font-family: "Silkscreen", sans-serif;
-      width: fit-content;
-      margin: 20px 0;
-      padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      background: #0d0d1a;
-      border: 2px solid #e6249b;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(255, 3, 200, 0.911);
-      list-style: none;
-      text-decoration: none;
-      justify-content: center;
-      color: #fff;
+        font-family: "Silkscreen", sans-serif;
+        background: #0d0d1a;
+        border: 2px solid #e6249b;
+        border-radius: 8px;
+        box-shadow: 0 0 12px rgba(255, 3, 200, 0.911);
+        padding: 12px 24px;
+    }
+
+    .navbar ul {
+        display: flex;
+        gap: 40px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
     }
 
     .navbar a {
-      font-family: "Silkscreen", sans-serif;
-      text-decoration: none;
-      color: white;
+        color: white;
+        text-decoration: none;
     }
 
-    .navbar li a:hover {
-      color: #00f0ff;
-      text-decoration: underline;
+    .navbar a:hover {
+        color: #00f0ff;
+        text-decoration: underline;
     }
-    
-    body{
+
+/* ---------- buttons (glass morph) ---------- */
+    .glass-btn {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+        color: white;
+        font-family: "Silkscreen", sans-serif;
+        font-size: clamp(11px, 1vw, 16px);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.9em 1.9em;
+        transition: all 0.25s ease;
+    }
+
+    /* pink glow on hover (and when using the keyboard) */
+    .glass-btn:hover,
+    .glass-btn:focus-visible {
+        background: rgba(255, 79, 216, 0.25);
+        border-color: #ff4fd8;
+        box-shadow: 0 0 10px #ff4fd8, 0 0 25px #ff4fd8, 0 0 45px rgba(255, 79, 216, 0.6);
+        transform: translateY(-2px);
+        outline: none;
+    }
+
+/* ---------- hero (first screen) ---------- */
+    .hero {
+        box-sizing: border-box;
+        min-height: 100vh;
+        padding: 120px 4vw 6vw;         /* top padding leaves room for the menu */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .hero-content {
+        width: min(46vw, 880px);        /* change this number to resize the title */
+    }
+
+    .hero-title {
         margin: 0;
-        min-height: 115vw;
-        position: relative;
-        background-image: url(BG1.png);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center top;
     }
-    
-    .maintitle{
-        position: relative;
-        top: 250px;
-        margin: -300px auto 0;
-        width: 70%;
+
+    .hero-title img {
+        display: block;
+        width: 100%;
         height: auto;
     }
 
-  .aboutustitle{
-    position: absolute;
-    top: 28vw;       /* your current value + 10vw */
-    left: 30%;
-    width: 40%;
-    height: auto;
-}
-
-    .card{
-        position: absolute;
-        width: 30%;
-        margin: 0;
+    .hero-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1vw;
+        margin-top: 1.5vw;
+        padding-left: 6.5%;             /* lines the buttons up with the title text */
     }
-    
-    .cards{
-    position: absolute;
-    top: 8vw;       /* positive = moves the boxes down, negative = up */
-    left: 0;
-    width: 100%;
-}
-/* border positions, animation */
-    #bd1{top: 47.5vw; left: 10%;   animation-duration: 3s;   animation-delay: 0s;}
-    #bd2{top: 47vw;   left: 34.5%; animation-duration: 4s;   animation-delay: 0.7s;}
-    #bd3{top: 47vw;   left: 60%;   animation-duration: 2.5s; animation-delay: 1.3s;}
-    #bd4{top: 70vw;   left: 22%;   animation-duration: 3.5s; animation-delay: 0.3s;}
-    #bd5{top: 70vw;   left: 48%;   animation-duration: 5s;   animation-delay: 1.8s;}
 
-/* texts style in border */
-    .text{
+/* ---------- about section ---------- */
+    .about {
+        padding: 4vw 0 10vw;
+        scroll-margin-top: 90px;        /* so the menu doesn't cover the title when you click About */
+    }
+
+    .about-title {
+        margin: 0 0 3vw;
+    }
+
+    .about-title img {
+        display: block;
+        width: min(32vw, 620px);
+        height: auto;
+        margin: 0 auto;                 /* centered */
+    }
+
+/* ---------- member cards ---------- */
+    /* flex + wrap: 3 cards on the first row, the last 2 are centered automatically */
+    .members {
+        width: min(78vw, 1400px);
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 3vw;
+    }
+
+    .member {
+        position: relative;
+        isolation: isolate;
+        flex: 0 0 calc(33.333% - 2vw);  /* 3 per row (the 2vw is the gaps) */
+        aspect-ratio: 1 / 1;
+        container-type: inline-size;    /* lets the text scale with the card */
+    }
+
+    /* the border picture sits behind the text. inset: -20% lets the glow go outside the card */
+    .member::before {
+        content: "";
         position: absolute;
-        width: 22%;
-        z-index: 2;
-        color: white;
+        inset: -20%;
+        z-index: -1;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        animation: flicker 3s infinite;
+    }
+
+    .m1::before { background-image: url(Border1.png); animation-duration: 3s;   animation-delay: 0s; }
+    .m2::before { background-image: url(Border2.png); animation-duration: 4s;   animation-delay: 0.7s; }
+    .m3::before { background-image: url(Border3.png); animation-duration: 2.5s; animation-delay: 1.3s; }
+    .m4::before { background-image: url(Border4.png); animation-duration: 3.5s; animation-delay: 0.3s; }
+    .m5::before { background-image: url(Border5.png); animation-duration: 5s;   animation-delay: 1.8s; }
+
+    @keyframes flicker {
+        0%   {opacity: 1;}
+        4%   {opacity: 0.4;}
+        6%   {opacity: 1;}
+        8%   {opacity: 0.2;}
+        10%  {opacity: 1;}
+        50%  {opacity: 1;}
+        52%  {opacity: 0.5;}
+        54%  {opacity: 1;}
+        100% {opacity: 1;}
+    }
+
+    /* text inside the border */
+    .member-text {
+        padding: 14% 10% 8% 11%;        /* keeps the text inside the frame */
         font-family: "Pixelify Sans", monospace;
         text-shadow: 0 0 6px white, 0 0 12px #ff4fd8;
     }
 
-    .text h2{font-size: 2.50vw; margin: 0 0 1vw; text-transform: uppercase;}
-    .text h3{font-size: 1.40vw; font-weight: 400; letter-spacing: 0.2vw; margin: 0 0 1vw; text-transform: uppercase;}
-    .text p {font-size: 1.10vw; margin: 0;}
-
-/* texts inside border positions individually */
-    #t1{top: 55vw;   left: 17%;}
-    #t2{top: 54.5vw; left: 41%;}
-    #t3{top: 54.5vw; left: 67%;}
-    #t4{top: 77vw; left: 28.5%;}
-    #t5{top: 77vw; left: 54.5%;}
-
-/* narrower text box for the bottom two cards so text stays inside the frame */
-    #t4, #t5 { width: 19%; }
-
-    @keyframes flicker {
-    0%   {opacity: 1;}
-    4%   {opacity: 0.4;}
-    6%   {opacity: 1;}
-    8%   {opacity: 0.2;}
-    10%  {opacity: 1;}
-    50%  {opacity: 1;}
-    52%  {opacity: 0.5;}
-    54%  {opacity: 1;}
-    100% {opacity: 1;}
+    /* font sizes use the card's width (cqw), vw is the fallback for old browsers */
+    .member-text h2 {
+        margin: 0 0 3cqw;
+        font-size: 2.2vw;
+        font-size: 9cqw;
+        text-transform: uppercase;
+        line-height: 1.1;
     }
 
-    .bd{
-    position: absolute;
-    width: 30%;
-    height: auto;
-    margin: 0;
-    animation: flicker 3s infinite;
+    .member-text h3 {
+        margin: 0 0 3cqw;
+        font-size: 1.3vw;
+        font-size: 5.6cqw;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        line-height: 1.25;
     }
 
-/* top borders */
-    #bd1{ top: 47.50vw; left: 10%; animation-duration: 3s;   animation-delay: 0s; }
-/* center border vv */
-    #bd2{ top: 47vw; left: 34.5%; animation-duration: 4s;   animation-delay: 0.7s; }
-    #bd3{ top: 47vw; left: 60%; animation-duration: 2.5s; animation-delay: 1.3s; }
-/* bottom borders */
-    #bd4{ top: 70vw; left: 22%; animation-duration: 3.5s; animation-delay: 0.3s; }
-    #bd5{ top: 70vw; left: 48%; animation-duration: 5s;   animation-delay: 1.8s; }
-
-/* extra, para di maselect ang images, gi ai ni hahah */
-    img {
-    user-select: none;          
-    -webkit-user-select: none;  
-    -moz-user-select: none;     
-    -webkit-user-drag: none;    
-    pointer-events: none;       
+    .member-text p {
+        margin: 0;
+        font-size: 1vw;
+        font-size: 4.4cqw;
+        line-height: 1.3;
     }
 
-/* row that holds the two buttons */
-    .btn-row {
-    position: relative;
-    top: 8vw;               /* move the buttons up/down here */
-    z-index: 5;
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 4.5vw;    /* lines the buttons up with the title */
-    gap: 1vw;
-}
+/* ---------- smaller screens ---------- */
+    @media (max-width: 900px) {
+        .hero-content { width: 90vw; }
+        .about-title img { width: 70vw; }
+        .members { width: 86vw; gap: 5vw; }
+        .member { flex-basis: calc(50% - 2.5vw); }      /* 2 per row */
+        .glass-btn { font-size: 12px; }
+        .navbar ul { gap: 20px; }
+    }
 
-/* glass morph button */
-    .glass-btn {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    @media (max-width: 560px) {
+        .member { flex-basis: 100%; }                   /* 1 per row */
+        .hero-buttons { gap: 10px; margin-top: 16px; }
+    }
 
-/* Text and sizing */
-    color: white;
-    font-family: "Silkscreen", sans-serif;
-    font-size: clamp(11px, 1vw, 16px);
-    font-weight: 700;
-    letter-spacing: 0.1vw;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.8vw 1.8vw;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-
-    /* hover effect sa glass button - pink glow */
-    .glass-btn:hover {
-    background: rgba(255, 79, 216, 0.25);
-    border-color: #ff4fd8;
-    box-shadow: 0 0 10px #ff4fd8, 0 0 25px #ff4fd8, 0 0 45px rgba(255, 79, 216, 0.6);
-    transform: translateY(-2px);
-}
-
-    html{
-    scroll-behavior: smooth;
-}
-
+/* ---------- people who don't want motion ---------- */
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .member::before { animation: none; }
+    }
 </style>
 </head>
 
 <body>
     <!-- Header menu -->
-  <header class="header">
-    <nav>
-      <ul class="navbar">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="calculator.html">Calculator</a></li>
-      </ul>
-    </nav>
-  </header>
-    
-    <!-- title and about us parts -->
-    <img class="maintitle" src="Title.png">
+    <header class="site-header">
+        <nav class="navbar">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <div class="btn-row">
-        <a href="calculator.html" class="glass-btn">Open Calculator</a>
-        <a href="#bd2" class="glass-btn">Meet the group</a>
+    <div class="page">
+        <!-- background video: the file must be in the same folder as this page -->
+        <video class="bg-video" src="BG1.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
+
+        <!-- hero: title + buttons -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <img src="hero-title.png" alt="Hello, we are Group A. Welcome to our project site. Check out the circuit calculator we built.">
+                </h1>
+
+                <div class="hero-buttons">
+                    <a href="calculator.html" class="glass-btn">Open Calculator</a>
+                    <a href="#about" class="glass-btn">Meet the group</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- about us: title + member cards -->
+        <section class="about" id="about">
+            <h2 class="about-title">
+                <img src="about-title.png" alt="About us">
+            </h2>
+
+            <div class="members">
+
+                <article class="member m1">
+                    <div class="member-text">
+                        <h2>Balani,<br>Irina Alexi</h2>
+                        <h3>Circuit Designer</h3>
+                        <p>she made the circuit verse design.</p>
+                    </div>
+                </article>
+
+                <article class="member m2">
+                    <div class="member-text">
+                        <h2>Bermudez,<br>Gian Andre</h2>
+                        <h3>Front-End Developer</h3>
+                        <p>he created the user interface and implemented the design.</p>
+                    </div>
+                </article>
+
+                <article class="member m3">
+                    <div class="member-text">
+                        <h2>Bernales,<br>Zeus</h2>
+                        <h3>Circuit Tester</h3>
+                        <p>he tested the circuit verse and provided the test table.</p>
+                    </div>
+                </article>
+
+                <article class="member m4">
+                    <div class="member-text">
+                        <h2>Escamilla,<br>Sarah Louisse</h2>
+                        <h3>Front-End Developer</h3>
+                        <p>she contributed to the user interface design and implementation.</p>
+                    </div>
+                </article>
+
+                <article class="member m5">
+                    <div class="member-text">
+                        <h2>Tubo,<br>Brent Cyrus</h2>
+                        <h3>Front-End Developer</h3>
+                        <p>he contributed to the user interface design and implementation.</p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
     </div>
-    
-    <section class="about" id="about">
-    <img class="aboutustitle" src="about us title.png">
-        
-<div class="cards">
-    <!-- member borders -->
-    <img class="bd" id="bd1" src="Border1.png">
-    <img class="bd" id="bd2" src="Border2.png">
-    <img class="bd" id="bd3" src="Border3.png">
-    <img class="bd" id="bd4" src="Border4.png">
-    <img class="bd" id="bd5" src="Border5.png">
-
-    <!-- text cards -->
-    
-    <div class="text" id="t1">
-        <h2>Balani, <br> Irina Alexi</h2>
-        <h3>Circuit Designer</h3>
-        <p>she made the circuit verse<br>design.</p>
-    </div>
-
-    <div class="text" id="t2">
-        <h2>Bermudez,<br>Gian Andre</h2>
-        <h3>Front-End<br>Developer</h3>
-        <p>he created the user interface<br>and implemented the design.</p>
-    </div>
-
-    <div class="text" id="t3">
-        <h2>Bernales, <br> Zeus</h2>
-        <h3>Circuit Tester</h3>
-        <p>he tested the circuit verse<br>and provided the test table.</p>
-    </div>
-
-    <div class="text" id="t4">
-        <h2>Escamilla, <br> Sarah Louisse</h2>
-        <h3>Front-End<br>Developer</h3>
-        <p>she contributed to the user <br>interface design and implementation.</p>
-    </div>
-
-    <div class="text" id="t5">
-        <h2>Tubo, <br> Brent Cyrus</h2>
-        <h3>Front-End<br>Developer</h3>
-        <p>he contributed to the user interface design and implementation.</p>
-    </div>
-</div>
-    </section>
-
-
-    <!-- explanation parts -->
-    <!-- glass morph for description -->
-
-
 </body>
 </html>
