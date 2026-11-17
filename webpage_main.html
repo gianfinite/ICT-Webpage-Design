@@ -6,27 +6,198 @@
     <title>Document</title>
 
 <style>
-    /* 100a13 */
+/* 100a13 = backround color */
     body{
-        min-height: 400vh;
+        margin: 0;
+        min-height: 115vw;
+        position: relative;
         background-image: url(BG1.png);
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center top;
-    
     }
     
     .maintitle{
-        width: 800px;
+        position: relative;
+        top: 250px;
+        margin: -300px auto 0;
+        width: 70%;
         height: auto;
     }
 
+    .aboutustitle{
+        position: absolute;
+        top: 450px;      
+        left: 30%;      
+        width: 40%;
+        height: auto;
+    }
+
+    .card{
+        position: absolute;
+        width: 30%;
+        margin: 0;
+    }
+/* border positions, animation */
+    #bd1{top: 47.5vw; left: 10%;   animation-duration: 3s;   animation-delay: 0s;}
+    #bd2{top: 47vw;   left: 34.5%; animation-duration: 4s;   animation-delay: 0.7s;}
+    #bd3{top: 47vw;   left: 60%;   animation-duration: 2.5s; animation-delay: 1.3s;}
+    #bd4{top: 70vw;   left: 22%;   animation-duration: 3.5s; animation-delay: 0.3s;}
+    #bd5{top: 70vw;   left: 48%;   animation-duration: 5s;   animation-delay: 1.8s;}
+
+/* texts style in border */
+    .text{
+        position: absolute;
+        width: 22%;
+        z-index: 2;
+        color: white;
+        font-family: "Pixelify Sans", monospace;
+        text-shadow: 0 0 6px white, 0 0 12px #ff4fd8;
+    }
+
+    .text h2{font-size: 2.50vw; margin: 0 0 1vw; text-transform: uppercase;}
+    .text h3{font-size: 1.40vw; font-weight: 400; letter-spacing: 0.2vw; margin: 0 0 1vw; text-transform: uppercase;}
+    .text p {font-size: 1.10vw; margin: 0;}
+
+/* texts inside border positions individually */
+    #t1{top: 55vw;   left: 17%;}
+    #t2{top: 54.5vw; left: 41%;}
+    #t3{top: 54.5vw; left: 67%;}
+    #t4{top: 77vw; left: 28.5%;}
+    #t5{top: 77vw; left: 54.5%;}
+
+    @keyframes flicker {
+    0%   {opacity: 1;}
+    4%   {opacity: 0.4;}
+    6%   {opacity: 1;}
+    8%   {opacity: 0.2;}
+    10%  {opacity: 1;}
+    50%  {opacity: 1;}
+    52%  {opacity: 0.5;}
+    54%  {opacity: 1;}
+    100% {opacity: 1;}
+    }
+
+    .bd{
+    position: absolute;
+    width: 30%;
+    height: auto;
+    margin: 0;
+    animation: flicker 3s infinite;
+    }
+
+/* top borders */
+    #bd1{ top: 47.50vw; left: 10%; animation-duration: 3s;   animation-delay: 0s; }
+/* center border vv */
+    #bd2{ top: 47vw; left: 34.5%; animation-duration: 4s;   animation-delay: 0.7s; }
+    #bd3{ top: 47vw; left: 60%; animation-duration: 2.5s; animation-delay: 1.3s; }
+/* bottom borders */
+    #bd4{ top: 70vw; left: 22%; animation-duration: 3.5s; animation-delay: 0.3s; }
+    #bd5{ top: 70vw; left: 48%; animation-duration: 5s;   animation-delay: 1.8s; }
+
+/* extra, para di maselect ang images, gi ai ni hahah */
+    img {
+    user-select: none;          /* Prevents highlighting/selecting */
+    -webkit-user-select: none;  /* Safari/Chrome support */
+    -moz-user-select: none;     /* Firefox support */
+    -webkit-user-drag: none;    /* Prevents dragging the image */
+    pointer-events: none;       /* Ignores clicks, right-clicks, and drags */
+    }
+
+/* glass morph button */
+    .glass-btn {
+    position: relative;
+    top: 5vw;    
+    left: -65%;
+    gap: 4vw;    
+    z-index: 5;
+
+    background: rgba(255, 255, 255, 0.1);   
+    backdrop-filter: blur(10px);            
+    -webkit-backdrop-filter: blur(10px);    
+    border: 1px solid rgba(255, 255, 255, 0.25); 
+    border-radius: 12px;                    
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 79, 216, 0.3); /* Depth + pink glow */
+    
+    
+/* Text and sizing */
+    color: white;
+    font-family: "Pixelify Sans", monospace;
+    font-size: 1.1vw;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.8vw 1.8vw;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+    /* hover effect sa glass button*/
+    .glass-btn:hover {
+    background: rgba(255, 79, 216, 0.25);   
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 18px #ff4fd8;           
+    transform: translateY(-2px);     
+}
+
+    html{
+    scroll-behavior: smooth;
+}
 
 </style>
 </head>
 
 <body>
-    <img class="maintitle" src="Title.png">
+    <!-- title and about us parts -->
 
-    
+    <img class="maintitle" src="Title.png">
+    <img class="aboutustitle" src="about us title.png">
+
+    <!-- member borders -->
+    <img class="bd" id="bd1" src="Border1.png">
+    <img class="bd" id="bd2" src="Border2.png">
+    <img class="bd" id="bd3" src="Border3.png">
+    <img class="bd" id="bd4" src="Border4.png">
+    <img class="bd" id="bd5" src="Border5.png">
+
+    <!-- text cards -->
+    <div class="text" id="t1">
+        <h2>Balani, <br> Irina Alexi</h2>
+        <h3>Circuit Designer</h3>
+        <p>she made the circuit verse<br>design.</p>
+    </div>
+
+    <div class="text" id="t2">
+        <h2>Bermudez,<br>Gian Andre</h2>
+        <h3>Front-End<br>Developer</h3>
+        <p>he created the user interface<br>and implemented the design.</p>
+    </div>
+
+    <div class="text" id="t3">
+        <h2>Bernales, <br> Zeus</h2>
+        <h3>Circuit Tester</h3>
+        <p>he tested the circuit verse<br>and provided the test table.</p>
+    </div>
+
+    <div class="text" id="t4">
+        <h2>Escamilla, <br> Sarah Louisse</h2>
+        <h3>Front-End<br>Developer</h3>
+        <p>she contributed to the user interface design and<br>implementation.</p>
+    </div>
+
+    <div class="text" id="t5">
+        <h2>Tubo, <br> Brent Cyrus</h2>
+        <h3>Front-End<br>Developer</h3>
+        <p>he contributed to the user<br>interface design and<br>implementation.</p>
+    </div>
+    <!-- button below title -->
+    <button class="glass-btn">Go to Calculator</button>
+    <a href="#bd2" class="glass-btn">Meet the group</a>
+
+
+
+    <!-- explanation parts -->
+    <!-- glass morph for description -->
+
+
 </body>
+</html>
