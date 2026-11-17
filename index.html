@@ -83,6 +83,13 @@
         width: 30%;
         margin: 0;
     }
+    
+    .cards{
+    position: absolute;
+    top: 8vw;       /* positive = moves the boxes down, negative = up */
+    left: 0;
+    width: 100%;
+}
 /* border positions, animation */
     #bd1{top: 47.5vw; left: 10%;   animation-duration: 3s;   animation-delay: 0s;}
     #bd2{top: 47vw;   left: 34.5%; animation-duration: 4s;   animation-delay: 0.7s;}
@@ -222,7 +229,8 @@
     
     <section>
     <img class="aboutustitle" src="about us title.png">
-
+        
+<div class="cards">
     <!-- member borders -->
     <img class="bd" id="bd1" src="Border1.png">
     <img class="bd" id="bd2" src="Border2.png">
@@ -261,6 +269,7 @@
         <h3>Front-End<br>Developer</h3>
         <p>he contributed to the user interface design and implementation.</p>
     </div>
+</div>
     </section>
 
 
